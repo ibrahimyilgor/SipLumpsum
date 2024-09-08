@@ -1,0 +1,35 @@
+{
+    "welcome": "Welcome",
+    "hello": "Hello, {{name}}!",
+    "languages": {
+        "language": "Language"
+    },
+    "navigation": {
+        "investmentCalculator": "Investment Calculator",
+        "savedInvestments": "Saved Investments",
+        "settings": "Settings"
+    },
+    "calculator": {
+        "oneTimeInvestmentAmount": "One Time Investment Amount",
+        "monthlyInvestment": "Monthly Investment Amount",
+        "expectedRate": "Expected Rate (Monthly-Percent)",
+        "periodOfInvestments": "Period of Investment (Month)",
+        "enterAmount": "Enter Amount",
+        "enterRate": "Enter Rate",
+        "enterPeriod": "Enter Period",
+        "calculate": "Calculate",
+        "save": "Save",
+        "name": "Name" 
+    },
+    "resultModal": {
+        "month": "Month",
+        "total": "Total",
+        "investment": "Investment",
+        "profit": "Profit"
+    },
+    "theme": {
+        "theme": "Theme",
+        "light": "Light",
+        "dark": "Dark"
+    }
+  }

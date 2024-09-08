@@ -1,0 +1,35 @@
+{
+    "welcome": "Hoş geldiniz",
+    "hello": "Merhaba, {{name}}!",
+    "languages": {
+        "language": "Dil"
+    },
+    "navigation": {
+        "investmentCalculator": "Yatırım Hesaplayıcı",
+        "savedInvestments": "Kayıtlı Yatırımlar",
+        "settings": "Ayarlar"
+    },
+    "calculator": {
+        "oneTimeInvestmentAmount": "Giriş Yatırım Miktarı",
+        "monthlyInvestment": "Aylık Yatırım Miktarı",
+        "expectedRate": "Beklenen Getiri Oranı (Aylık-Yüzde)",
+        "periodOfInvestments": "Yatırım Süresi (Ay)",
+        "enterAmount": "Miktar Girin",
+        "enterRate": "Oran Girin",
+        "enterPeriod": "Süre Girin",
+        "calculate": "Hesapla",
+        "save": "Kaydet",
+        "name": "İsim"
+    },
+    "resultModal": {
+        "month": "Ay",
+        "total": "Toplam",
+        "investment": "Yatırım",
+        "profit": "Kâr"
+    },
+    "theme": {
+        "theme": "Tema",
+        "light": "Açık",
+        "dark": "Koyu"
+    }
+  }
