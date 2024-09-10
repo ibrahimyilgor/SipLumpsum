@@ -6,11 +6,24 @@ import Settings from "./pages/Settings";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "./i18n";
 import { ThemeContextProvider } from "./theme/ThemeContext";
+import {
+  AppOpenAd,
+  InterstitialAd,
+  RewardedAd,
+  BannerAd,
+  TestIds,
+  BannerAdSize,
+} from "react-native-google-mobile-ads";
+import { useRef } from "react";
 
 const Drawer = createDrawerNavigator();
 
 function AppDrawer() {
   const { t } = useTranslation();
+  const bannerRef = useRef(null);
+  const adUnitId = __DEV__
+    ? TestIds.ADAPTIVE_BANNER
+    : "ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy";
 
   return (
     <ThemeContextProvider>
@@ -42,6 +55,11 @@ function AppDrawer() {
 
         {/* Add more screens as needed */}
       </Drawer.Navigator>
+      <BannerAd
+        ref={bannerRef}
+        unitId={adUnitId}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+      />
     </ThemeContextProvider>
   );
 }
