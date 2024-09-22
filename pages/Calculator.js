@@ -26,7 +26,16 @@ export default function Calculator() {
   const [investmentPeriod, setInvestmentPeriod] = useState("");
 
   const handleSave = async () => {
-    setSaveModalVisible(true);
+    const floatRegex = /^[+-]?(\d+(\.\d*)?|\.\d+)$/;
+    const intRegex = /^\d+$/;
+    if (
+      floatRegex.test(oneTimeInvestment) &&
+      floatRegex.test(monthlyInvestment) &&
+      floatRegex.test(rateOfReturn) &&
+      intRegex.test((investmentPeriod, 10))
+    ) {
+      setSaveModalVisible(true);
+    }
   };
 
   const handleCalculate = () => {
@@ -40,10 +49,10 @@ export default function Calculator() {
     const intRegex = /^\d+$/;
 
     if (
-      floatRegex.test(parseFloat(oneTimeInvestment)) &&
-      floatRegex.test(parseFloat(monthlyInvestment)) &&
-      floatRegex.test(parseFloat(rateOfReturn)) &&
-      intRegex.test(parseInt(investmentPeriod, 10))
+      floatRegex.test(oneTimeInvestment) &&
+      floatRegex.test(monthlyInvestment) &&
+      floatRegex.test(rateOfReturn) &&
+      intRegex.test((investmentPeriod, 10))
     ) {
       setModalVisible(true);
     }
@@ -137,6 +146,10 @@ export default function Calculator() {
             monthlyInvestment={monthlyInvestment}
             rateOfReturn={rateOfReturn}
             investmentPeriod={investmentPeriod}
+            setOneTimeInvestment={setOneTimeInvestment}
+            setMonthlyInvestment={setMonthlyInvestment}
+            setRateOfReturn={setRateOfReturn}
+            setInvestmentPeriod={setInvestmentPeriod}
           />
         </View>
       </View>

@@ -14,6 +14,7 @@ import {
   calculateSipLumpsumTable,
 } from "../algorithms/sip";
 import InvestmentTable from "./table";
+import { Ionicons } from "@expo/vector-icons";
 
 const ResultModal = ({ modalVisible, setModalVisible, calculationInput }) => {
   const { t } = useTranslation();
@@ -34,12 +35,15 @@ const ResultModal = ({ modalVisible, setModalVisible, calculationInput }) => {
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
             >
-              <Image
-                source={require("../assets/cancel.png")}
-                style={styles.closeIcon}
-              />
+              <Ionicons name="close" size={24} color="black" />
             </TouchableOpacity>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
+              <Text style={styles.centeredView}>
+                {calculationInput?.name?.length > 25
+                  ? `${calculationInput?.name.substring(0, 25)}...`
+                  : calculationInput?.name}
+              </Text>
+
               <InvestmentTable
                 investments={calculateSipLumpsumTable(
                   parseFloat(calculationInput.monthlyInvestment),
@@ -74,15 +78,16 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
+    padding: 15, // Optional: Add some padding for better layout
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: "#000", // Shadow properties for iOS
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 3,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 10, // Elevation for Android
     width: "90%",
     maxHeight: "80%",
   },

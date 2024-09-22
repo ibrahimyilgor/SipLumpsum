@@ -103,9 +103,9 @@ const styles = StyleSheet.create({
     width: "50%",
     marginTop: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#cccccc",
     borderRadius: 8,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
     maxHeight: 150,
     zIndex: 1,
   },
@@ -113,23 +113,23 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#cccccc",
   },
   selectedLanguage: {
     backgroundColor: "#444",
-    color: "#ddd",
+    color: "#dddddd",
   },
   unselectedLanguage: {
     backgroundColor: "#333",
-    textColor: "#fff",
+    textColor: "#ffffff",
   },
   selectedLanguageText: {
-    backgroundColor: "#444",
+    backgroundColor: "#444444",
     color: "#ddd",
   },
   unselectedLanguageText: {
-    backgroundColor: "#333",
-    color: "#fff",
+    backgroundColor: "#333333",
+    color: "#ffffff",
   },
 });
 

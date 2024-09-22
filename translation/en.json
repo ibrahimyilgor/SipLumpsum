@@ -19,6 +19,7 @@
         "enterPeriod": "Enter Period",
         "calculate": "Calculate",
         "save": "Save",
+        "update": "Update",
         "name": "Name" 
     },
     "resultModal": {
@@ -26,6 +27,11 @@
         "total": "Total",
         "investment": "Investment",
         "profit": "Profit"
+    },
+    "deleteModal": {
+        "yes": "Yes",
+        "no": "No",
+        "areYouSureToDelete": "Are you sure to delete?"
     },
     "theme": {
         "theme": "Theme",

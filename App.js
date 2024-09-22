@@ -21,10 +21,8 @@ const Drawer = createDrawerNavigator();
 function AppDrawer() {
   const { t } = useTranslation();
   const bannerRef = useRef(null);
-  const adUnitId = __DEV__
-    ? TestIds.ADAPTIVE_BANNER
-    : "ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy";
 
+  InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL);
   return (
     <ThemeContextProvider>
       <Drawer.Navigator
@@ -57,7 +55,7 @@ function AppDrawer() {
       </Drawer.Navigator>
       <BannerAd
         ref={bannerRef}
-        unitId={adUnitId}
+        unitId={"ca-app-pub-4943937138677405/1530942898"}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
       />
     </ThemeContextProvider>

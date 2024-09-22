@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   TextInput,
   Pressable,
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
@@ -18,28 +20,34 @@ import {
   AdEventType,
   TestIds,
 } from "react-native-google-mobile-ads";
-import { useNavigation } from "@react-navigation/native";
 
 const adUnitId = __DEV__
   ? TestIds.INTERSTITIAL
   : "ca-app-pub-4943937138677405/1530942898";
 
-const SaveModal = ({
+const EditModal = ({
   modalVisible,
   setModalVisible,
-  oneTimeInvestment,
-  monthlyInvestment,
-  rateOfReturn,
-  investmentPeriod,
-  setOneTimeInvestment,
-  setMonthlyInvestment,
-  setRateOfReturn,
-  setInvestmentPeriod,
+  data,
+  setEditButtonClicked,
 }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
 
-  const [name, setName] = React.useState("");
+  console.log("ibrahimdata", data);
+  const [name, setName] = React.useState(data?.name || "");
+  const [oneTimeInvestmentAmount, setOneTimeInvestmentAmount] = React.useState(
+    data?.oneTimeInvestment || ""
+  );
+  const [monthlyInvestment, setMonthlyInvestment] = React.useState(
+    data?.monthlyInvestment || ""
+  );
+  const [expectedRate, setExpectedRate] = React.useState(
+    data?.rateOfReturn || ""
+  );
+  const [periodOfInvestments, setPeriodOfInvestments] = React.useState(
+    data?.investmentPeriod || ""
+  );
+
   const [interstitial, setInterstitial] = React.useState(null);
   const [loaded, setLoaded] = React.useState(false);
 
@@ -90,45 +98,57 @@ const SaveModal = ({
     }
   };
 
+  useEffect(() => {
+    if (modalVisible) {
+      setName(data?.name || "");
+      setOneTimeInvestmentAmount(data?.oneTimeInvestment || "");
+      setMonthlyInvestment(data?.monthlyInvestment || "");
+      setExpectedRate(data?.rateOfReturn || "");
+      setPeriodOfInvestments(data?.investmentPeriod || "");
+    }
+  }, [modalVisible]);
+
   const handleSave = async () => {
     try {
-      let investments = [];
-
       const value = await AsyncStorage.getItem("investments");
-      console.log("ibrahim2", value, JSON.parse(value));
 
-      if (JSON.parse(value) !== null) {
+      let investments = [...value];
+
+      // Handle calculation logic here
+      console.log("One Time Investment:", oneTimeInvestmentAmount);
+      console.log("Monthly Investment:", monthlyInvestment);
+      console.log("Expected Rate of Return:", expectedRate);
+      console.log("Period of Investment:", periodOfInvestments);
+
+      const floatRegex = /^[+-]?(\d+(\.\d*)?|\.\d+)$/;
+      const intRegex = /^\d+$/;
+
+      // Dismiss keyboard after calculation
+      Keyboard.dismiss();
+
+      if (
+        Array.isArray(JSON.parse(value)) &&
+        floatRegex.test(oneTimeInvestmentAmount) &&
+        floatRegex.test(monthlyInvestment) &&
+        floatRegex.test(expectedRate) &&
+        intRegex.test((periodOfInvestments, 10))
+      ) {
         investments = JSON.parse(value);
-        investments.push({
+        investments[data?.index] = {
           name,
-          oneTimeInvestment,
+          oneTimeInvestment: oneTimeInvestmentAmount,
           monthlyInvestment,
-          rateOfReturn,
-          investmentPeriod,
-        });
+          rateOfReturn: expectedRate,
+          investmentPeriod: periodOfInvestments,
+        };
+
+        await AsyncStorage.setItem("investments", JSON.stringify(investments));
+        showInterstitial();
+        setEditButtonClicked((ebc) => !ebc);
+        setModalVisible(false);
       } else {
-        investments = [
-          {
-            name,
-            oneTimeInvestment,
-            monthlyInvestment,
-            rateOfReturn,
-            investmentPeriod,
-          },
-        ];
       }
-
-      await AsyncStorage.setItem("investments", JSON.stringify(investments));
-
-      setOneTimeInvestment(),
-        setMonthlyInvestment(),
-        setRateOfReturn(),
-        setInvestmentPeriod();
-
-      showInterstitial();
-      setName("");
-      setModalVisible(false);
-      navigation.navigate(t("navigation.savedInvestments"));
+      console.log("ibrahim22", investments);
     } catch (e) {
       console.error("Failed to save value.", e);
     }
@@ -145,7 +165,7 @@ const SaveModal = ({
         }}
       >
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+          <KeyboardAvoidingView style={styles.modalView}>
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
@@ -161,11 +181,61 @@ const SaveModal = ({
                 value={name}
                 onChangeText={setName}
               />
+              <Text style={styles.label}>
+                {t("calculator.oneTimeInvestmentAmount")}
+              </Text>
+              <TextInput
+                style={styles.input}
+                placeholder={t("calculator.oneTimeInvestmentAmount")}
+                placeholderTextColor="#999"
+                value={oneTimeInvestmentAmount}
+                onChangeText={setOneTimeInvestmentAmount}
+                inputMode="decimal"
+                keyboardType="numeric"
+                returnKeyType="done"
+              />
+              <Text style={styles.label}>
+                {t("calculator.monthlyInvestment")}
+              </Text>
+              <TextInput
+                style={styles.input}
+                placeholder={t("calculator.monthlyInvestment")}
+                placeholderTextColor="#999"
+                value={monthlyInvestment}
+                onChangeText={setMonthlyInvestment}
+                inputMode="decimal"
+                keyboardType="numeric"
+                returnKeyType="done"
+              />
+              <Text style={styles.label}>{t("calculator.expectedRate")}</Text>
+              <TextInput
+                style={styles.input}
+                placeholder={t("calculator.expectedRate")}
+                placeholderTextColor="#999"
+                value={expectedRate}
+                onChangeText={setExpectedRate}
+                inputMode="decimal"
+                keyboardType="numeric"
+                returnKeyType="done"
+              />
+              <Text style={styles.label}>
+                {t("calculator.periodOfInvestments")}
+              </Text>
+              <TextInput
+                style={styles.input}
+                placeholder={t("calculator.periodOfInvestments")}
+                placeholderTextColor="#999"
+                value={periodOfInvestments}
+                onChangeText={setPeriodOfInvestments}
+                inputMode="decimal"
+                keyboardType="numeric"
+                returnKeyType="done"
+              />
               <Pressable style={styles.button} onPress={handleSave}>
-                <Text style={styles.buttonText}>{t("calculator.save")}</Text>
+                <Text style={styles.buttonText}>{t("calculator.update")}</Text>
               </Pressable>
             </View>
-          </View>
+          </KeyboardAvoidingView>
         </View>
       </Modal>
     </View>
@@ -199,7 +269,6 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: "90%",
     maxHeight: "80%",
-    // minHeight: "50%",
   },
   closeButton: {
     position: "absolute",
@@ -230,6 +299,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 15,
     width: "90%",
+    minHeight: "0%",
   },
   label: {
     color: "#ccc",
@@ -259,4 +329,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SaveModal;
+export default EditModal;

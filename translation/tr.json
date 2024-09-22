@@ -19,6 +19,7 @@
         "enterPeriod": "Süre Girin",
         "calculate": "Hesapla",
         "save": "Kaydet",
+        "update": "Güncelle",
         "name": "İsim"
     },
     "resultModal": {
@@ -26,6 +27,11 @@
         "total": "Toplam",
         "investment": "Yatırım",
         "profit": "Kâr"
+    },
+    "deleteModal": {
+        "yes": "Evet",
+        "no": "Hayır",
+        "areYouSureToDelete": "Silmek istediğinze emin misiniz?"
     },
     "theme": {
         "theme": "Tema",
